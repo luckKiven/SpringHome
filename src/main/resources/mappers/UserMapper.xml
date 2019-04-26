@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.kiven.mapper.UserMapper">
+    <!--注册用户的持久层接口-->
+    <!--Integer addNew();-->
+    <insert id="addNew" >
+        INSERT INTO
+        t_user(
+        username,password,
+        salt, phone,is_delete,nickname,
+        created_user, created_time,
+        modified_user,modified_time
+        )values(
+        #{username},#{password},
+        #{salt},#{phone},#{isDelete} ,#{nickname},
+        #{createdUser}, #{createdTime},
+        #{modifiedUser},#{modifiedTime}
+        )
+    </insert>
+
+    <!--根据username去查找用户-->
+    <!-- User findByUsername(String username);-->
+    <select id="findByUsername" resultType="cn.tedu.kiven.entity.User">
+        SELECT
+            uid,username,password,salt,is_delete isDelete,nickname,avatar
+        FROM
+            t_user
+        WHERE
+            username=#{username}
+    </select>
+
+    <!--根据uid去查找用户-->
+    <!-- User findByUid(Integer uid);-->
+    <select id="findByUid" resultType="cn.tedu.kiven.entity.User">
+        SELECT
+            uid,username,
+            password,salt,
+            nickname,phone,
+            email,gender,
+            is_delete  isDelete
+        FROM
+            t_user
+        WHERE
+             uid=#{uid}
+    </select>
+
+    <!--修改密码-->
+    <!--Integer updatePassword(String password);-->
+    <update id="updatePassword">
+        UPDATE
+            t_user
+        SET
+            password=#{password},
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE
+            uid=#{uid}
+    </update>
+
+    <!--修改资料-->
+    <!--Integer updateInfo(User user);-->
+    <update id="updateInfo" >
+        UPDATE
+            t_user
+        SET
+            nickname=#{nickname},realname=#{realname},
+            gender=#{gender},phone=#{phone},
+            email=#{email},avatar=#{avatar},
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE
+            uid=#{uid}
+    </update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
